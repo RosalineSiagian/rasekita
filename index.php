@@ -1,3 +1,57 @@
+<?php
+// database connection settings
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "rasekita";
+
+// create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// check connection
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+
+// query to fetch data
+$sql = "SELECT*FROM test";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+  // store the data in a variable
+  $data = array();
+  while($row = $result->fetch_assoc()) {
+    $data[] = $row;
+  }
+}
+
+$conn->close();
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data from Database</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <h1>Data from Database</h1>
+  <ul>
+    <?php foreach ($data as $item) { ?>
+      <li>
+        <h2><?php echo $item["name"]; ?></h2>
+        <p><?php echo $item["description"]; ?></p>
+      </li>
+    <?php } ?>
+  </ul>
+</body>
+</html>
 <!DOCTYPE html>
 <html lang="en">
 
